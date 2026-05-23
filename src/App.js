@@ -1125,12 +1125,21 @@ function Contact() {
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 4000);
-  };
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
+  const response = await fetch("https://formspree.io/f/xqejldkn", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(form),
+  });
+
+  if (response.ok) {
+    setSubmitted(true);
+  }
+};
   return (
     <section id="contact" className="section">
       <div className="container">
